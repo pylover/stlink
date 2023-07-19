@@ -748,7 +748,7 @@ int32_t stlink_flashloader_write(stlink_t *sl, flash_loader_t *fl, stm32_addr_t 
              sl->flash_type == STM32_FLASH_TYPE_G4 ||
              sl->flash_type == STM32_FLASH_TYPE_L5_U5_H5 ||
              sl->flash_type == STM32_FLASH_TYPE_C0) {
-  
+
     if (sl->flash_type == STM32_FLASH_TYPE_L5_U5_H5 && (len % 16)) {
         WLOG("Data size is aligned to 16 byte");
         len += 16 - len%16;
@@ -778,19 +778,22 @@ int32_t stlink_flashloader_write(stlink_t *sl, flash_loader_t *fl, stm32_addr_t 
   } else if (sl->flash_type == STM32_FLASH_TYPE_L0_L1) {
     uint32_t val;
     uint32_t flash_regs_base = get_stm32l0_flash_base(sl);
-    uint32_t pagesize = (flash_regs_base == FLASH_L0_REGS_ADDR)? L0_WRITE_BLOCK_SIZE : L1_WRITE_BLOCK_SIZE;
+
+    /* https://github.com/stlink-org/stlink/issues/1203 */
+    // uint32_t pagesize = (flash_regs_base == FLASH_L0_REGS_ADDR)? L0_WRITE_BLOCK_SIZE : L1_WRITE_BLOCK_SIZE;
 
     DLOG("Starting %3u page write\r\n", len / sl->flash_pgsz);
 
     off = 0;
 
-    if (len > pagesize) {
-      if (stm32l1_write_half_pages(sl, fl, addr, base, len, pagesize)) {
-        return (-1);
-      } else {
-        off = (size_t)(len / pagesize) * pagesize;
-      }
-    }
+    https://github.com/stlink-org/stlink/issues/1203 */
+    // if (len > pagesize) {
+    //   if (stm32l1_write_half_pages(sl, addr, base, len, pagesize)) {
+    //     return (-1);
+    //   } else {
+    //     off = (size_t)(len / pagesize) * pagesize;
+    //   }
+    // }
 
     // write remaining word in program memory
     for (; off < len; off += sizeof(uint32_t)) {

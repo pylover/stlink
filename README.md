@@ -11,6 +11,14 @@
 
 Recent new features and bugfixes can be found in the [Changelog](CHANGELOG.md) of this software project.
 
+## Quickstart
+```bash
+make clean
+make release
+sudo make install
+sudo ldconfig
+```
+
 #### License
 
 The stlink library and tools are licensed under the **[BSD-3 License](LICENSE.md)**.
