@@ -786,7 +786,7 @@ int32_t stlink_flashloader_write(stlink_t *sl, flash_loader_t *fl, stm32_addr_t 
 
     off = 0;
 
-    https://github.com/stlink-org/stlink/issues/1203 */
+    // /* https://github.com/stlink-org/stlink/issues/1203 */
     // if (len > pagesize) {
     //   if (stm32l1_write_half_pages(sl, addr, base, len, pagesize)) {
     //     return (-1);
